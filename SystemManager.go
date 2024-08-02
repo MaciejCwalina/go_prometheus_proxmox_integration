@@ -19,14 +19,12 @@ func (sm *SystemManager) GetInfrastructureData() ([]map[string]interface{}, erro
 
 	if err != nil {
 		log.Fatal("Failed to get output of pvesh due to ", err.Error())
-		return nil, err
 	}
 
 	var infrastructureData []map[string]interface{}
 	err = json.Unmarshal(bytes, &infrastructureData)
 	if err != nil {
 		log.Fatal("Failed to parse json due to ", err.Error())
-		return nil, err
 	}
 
 	return infrastructureData, nil
