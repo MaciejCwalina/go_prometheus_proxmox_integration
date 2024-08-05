@@ -12,7 +12,7 @@ type SystemManager struct {
 	storage []Storage
 }
 
-func (sm *SystemManager) GetInfrastructureData() ([]map[string]interface{}, error) {
+func (sm *SystemManager) GetInfrastructureData() []map[string]interface{} {
 	pCmd := exec.Command("/usr/bin/pvesh", "get", "/cluster/resources", "--output-format", "json-pretty")
 	pCmd.Environ()
 	bytes, err := pCmd.Output()
@@ -27,7 +27,7 @@ func (sm *SystemManager) GetInfrastructureData() ([]map[string]interface{}, erro
 		log.Fatal("Failed to parse json due to ", err.Error())
 	}
 
-	return infrastructureData, nil
+	return infrastructureData
 }
 
 func (sm *SystemManager) PopulateSlices(infrastructureData []map[string]interface{}) {
