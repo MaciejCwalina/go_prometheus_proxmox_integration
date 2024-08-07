@@ -1,6 +1,8 @@
 package main
 
 import (
+	"strconv"
+
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promauto"
 )
@@ -94,3 +96,27 @@ var (
 		[]string{"name"},
 	)
 )
+
+func ResetGuages() {
+	proxmoxStatusInfoGuage.Reset()
+	proxmoxVMCpuInfo.Reset()
+}
+
+func SetGuages(vm *VirtualMachine) {
+	var isRunning float64
+	if vm.Status == "running" {
+		isRunning = 1
+	} else {
+		isRunning = 0
+	}
+
+	proxmoxStatusInfoGuage.WithLabelValues(vm.Name, vm.ID, vm.Status).Set(isRunning)
+	proxmoxVMCpuInfo.WithLabelValues(vm.Name, strconv.FormatFloat(vm.CPU, 'E', -1, 64), strconv.Itoa(vm.MaxCPU)).Set(vm.CPU)
+	proxmoxDiskRead.WithLabelValues(vm.Name).Set(float64(vm.DiskRead))
+	proxmoxDiskWrite.WithLabelValues(vm.Name).Set(float64(vm.DiskWrite))
+	proxmoxMaxVMMemory.WithLabelValues(vm.Name).Set(float64(vm.MaxMem))
+	proxmoxUsedVMMemory.WithLabelValues(vm.Name).Set(float64(vm.Mem))
+	proxmoxNetworkIn.WithLabelValues(vm.Name).Set(float64(vm.NetIn))
+	proxmoxNetworkOut.WithLabelValues(vm.Name).Set(float64(vm.NetOut))
+	proxmoxUpTime.WithLabelValues(vm.Name).Set(float64(vm.Uptime))
+}
