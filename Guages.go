@@ -84,4 +84,13 @@ var (
 			Help: "Sends the time it took to scrape data from proxmox and the vms",
 		},
 	)
+
+	proxmoxUpTime = promauto.NewGaugeVec(
+		prometheus.GaugeOpts{
+			Name: "proxmox_vm_uptime",
+			Help: "Sends the vms uptime",
+		},
+
+		[]string{"name"},
+	)
 )

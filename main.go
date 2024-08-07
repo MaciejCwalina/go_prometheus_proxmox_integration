@@ -33,6 +33,7 @@ func RecordMetrics(systemManager *SystemManager) {
 				proxmoxUsedVMMemory.WithLabelValues(vm.Name).Set(float64(vm.Mem))
 				proxmoxNetworkIn.WithLabelValues(vm.Name).Set(float64(vm.NetIn))
 				proxmoxNetworkOut.WithLabelValues(vm.Name).Set(float64(vm.NetOut))
+				proxmoxUpTime.WithLabelValues(vm.Name).Set(float64(vm.Uptime))
 			}
 
 			proxmoxScrapingTime.Set(float64(time.Since(startedTime)))
