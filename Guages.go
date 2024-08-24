@@ -95,15 +95,6 @@ var (
 
 		[]string{"name"},
 	)
-
-	serverNetworkInformation = promauto.NewGaugeVec(
-		prometheus.GaugeOpts{
-			Name: "proxmox_server_network_information",
-			Help: "Sends the network information of the server",
-		},
-
-		[]string{"src", "dst"},
-	)
 )
 
 func ResetGuages() {
@@ -128,14 +119,4 @@ func SetGuages(vm *VirtualMachine) {
 	proxmoxNetworkIn.WithLabelValues(vm.Name).Set(float64(vm.NetIn))
 	proxmoxNetworkOut.WithLabelValues(vm.Name).Set(float64(vm.NetOut))
 	proxmoxUpTime.WithLabelValues(vm.Name).Set(float64(vm.Uptime))
-}
-
-func SetNetworkGuages(packets []Packet) {
-	for _, packet := range packets {
-		if packet.Size <= 0 {
-			continue
-		}
-
-		serverNetworkInformation.WithLabelValues(packet.Src, packet.Dest).Add(float64(packet.Size))
-	}
 }
