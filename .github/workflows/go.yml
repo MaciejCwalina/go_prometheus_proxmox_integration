@@ -38,4 +38,4 @@ jobs:
       with:
         token: ${{ secrets.PAT }}
         tag: ${{ env.TAG }}
-        artifacts: "output/build-artifact.zip"
+        artifacts: "output/*"
