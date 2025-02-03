@@ -18,7 +18,9 @@ jobs:
         go-version: '1.22.5'
 
     - name: Build
-      run: go build -v -o ~/output
+      run: |
+        mkdir ~/output
+        go build -v -o ~/output
 
     - name: Test
       run: go test -v ./...
