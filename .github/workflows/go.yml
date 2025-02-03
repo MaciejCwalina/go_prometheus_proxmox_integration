@@ -28,10 +28,14 @@ jobs:
       with:
         name: build-artifact
         path: output/*
+        
+    - name: Set Tag
+      id: tag
+      run: echo "TAG=go_prometheus_proxmox_integration-$(date +'%Y%m%d')" >> $GITHUB_ENV
 
     - uses: actions/checkout@v3
     - uses: ncipollo/release-action@v1
       with:
         token: ${{ secrets.PAT }}
-        tag: "release"
-        artifacts: "release.tar.gz,foo/*.txt"
+        tag: ${{ env.TAG }}
+        artifacts: "release.zip"
