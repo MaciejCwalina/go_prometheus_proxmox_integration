@@ -27,6 +27,7 @@ jobs:
     - name: Release
       uses: ncipollo/release-action@v1
       with:
+        github_token: ${{ secrets.PAT }}
         tag: "release"
         artifacts: "release.tar.gz,foo/*.txt"
       env:
