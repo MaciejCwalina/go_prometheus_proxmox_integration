@@ -37,7 +37,7 @@ jobs:
       run: pwd
 
     - name: test2
-      run: ls output
+      run: ls output/go_prometheus_proxmox_integration
       
     - uses: actions/checkout@v3
     - uses: ncipollo/release-action@v1
