@@ -33,15 +33,9 @@ jobs:
       id: tag
       run: echo "TAG=go_prometheus_proxmox_integration-$(date +'%Y%m%d')" >> $GITHUB_ENV
 
-    - name: test
-      run: pwd
-
-    - name: test2
-      run: ls output/go_prometheus_proxmox_integration
-      
     - uses: actions/checkout@v3
     - uses: ncipollo/release-action@v1
       with:
         token: ${{ secrets.PAT }}
         tag: ${{ env.TAG }}
-        artifacts: "output/*"
+        artifacts: "build-artifact/*"
